@@ -32,7 +32,7 @@
    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 This sgml end tag completion plugin aims to provide a simple means to complete
-end tags in smgl documents (xml, html, etc.). Unlike some other end tag
+end tags in sgml documents (xml, html, etc.). Unlike some other end tag
 completion plugins, the end tag is not auto added when you finish typing the
 opening tag, but instead is inserted only when you start typing the closing tag
 (when you hit the slash in '</'), at which point the tag name and closing > are
