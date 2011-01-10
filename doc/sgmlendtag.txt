@@ -1,0 +1,42 @@
+*sgmlendtag.txt*
+
+-----------------------------------------------------------------------------
+Sgml End Tag Completion                          *sgmlendtag* 
+
+  Overview                           |sgmlendtag-overview|
+  Configuration                      |sgmlendtag-configuration|
+
+-----------------------------------------------------------------------------
+Overview                                         *sgmlendtag-overview*
+
+This plugin aims to provide a simple means to complete end tags in smgl
+documents (xml, html, etc.). Unlike some other end tag completion plugins, the
+end tag is not auto added when you finish typing the opening tag, but instead
+is inserted only when you start typing the closing tag (when you hit the slash
+in '</'), at which point the tag name and closing > are inserted
+automatically. The intent of this approach is to prevent an interruption in
+your flow of typing by not requiring you to ever have to navigate around text
+added to the right of the cursor.
+
+
+-----------------------------------------------------------------------------
+Configuration                                    *sgmlendtag-configuration*
+
+b:SgmlCompleteEndTagIgnore                       *b:SgmlCompleteEndTagIgnore*
+  A buffer local variable that you can set in an ftplugin file etc, to define
+  a list of tag names which should not be considered for end tag completion.
+  By default, for html files only, this variable is set to ['br', 'input']
+  since <br> and <input> are valid self contained tags that have not
+  corresponding end tag.
+
+Note: The mapping to complete end tags is defined in both an html and xml
+ftplugin which requires you to have ftplugin support enabled
+(|:filetype-plugin-on|). Should you edit a filetype that contains sgml tags
+but does not source either the html nor the xml filetype plugins, you can
+manually define the sgml end tag completion mapping by adding the following to
+an ftplugin file for that filetype: >
+
+  imap <buffer> <silent> / <c-r>=sgml#CompleteEndTag()<cr>
+>
+
+vim:tw=78:ft=help:norl:
