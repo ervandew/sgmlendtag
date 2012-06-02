@@ -44,21 +44,31 @@ function sgml#CompleteEndTag()
     let tag = s:GetStartTag(line('.'))
     if tag != ''
       let result = '/' . tag
-      if line[col('.') - 1] == '>'
-        " delete the closing char and force adding a new one so that vim
-        " reindents for us.
-        let result .= "\<del>"
-      endif
 
-      " handle quirks w/ delimitMate and my matchem plugin
-      if exists('b:_l_delimitMate_buffer')
-        if len(b:_l_delimitMate_buffer) && b:_l_delimitMate_buffer[-1] == '>'
-          call remove(b:_l_delimitMate_buffer, -1)
+      let col = col('.')
+      let del = 1
+      if line[col - 1] == '>'
+        " handle quirks w/ delimitMate and my matchem plugin
+        if exists('b:_l_delimitMate_buffer')
+          if len(b:_l_delimitMate_buffer) && b:_l_delimitMate_buffer[-1] == '>'
+            call remove(b:_l_delimitMate_buffer, -1)
+            let del = 0
+          endif
         endif
-      endif
-      if exists('b:matchemqueue')
-        if len(b:matchemqueue) && b:matchemqueue[-1] == '>'
-          call remove(b:matchemqueue, -1)
+        if exists('b:matchemqueue')
+          if len(b:matchemqueue) && b:matchemqueue[-1] == '>'
+            call remove(b:matchemqueue, -1)
+            let del = 0
+          endif
+        endif
+
+        if del
+          " delete the closing char and force adding a new one so that vim
+          " reindents for us.
+          let result .= "\<del>"
+        else
+          " handle match plugins (delimitMate, matchem) w/out breaking repeat
+          call setline('.', line[:col - 2] . line[col - 0:])
         endif
       endif
 
