@@ -1,7 +1,7 @@
 " Author:  Eric Van Dewoestine
 "
 " License: {{{
-"   Copyright (c) 2005 - 2011, Eric Van Dewoestine
+"   Copyright (c) 2005 - 2012, Eric Van Dewoestine
 "   All rights reserved.
 "
 "   Redistribution and use of this software in source and binary forms, with
@@ -126,7 +126,7 @@ function s:ExtractTags(line)
   let line = a:line
   let tags = []
   while line =~ '<\w\+'
-    let tag = substitute(line, '.\{-}<\([a-zA-Z0-9:_]\+\).*', '\1', '')
+    let tag = substitute(line, '.\{-}<\([a-zA-Z0-9:_-]\+\).*', '\1', '')
     if line !~ '<' . tag . '[^>]\{-}/>' && !s:IgnoreTag(tag)
       call add(tags, tag)
     endif
