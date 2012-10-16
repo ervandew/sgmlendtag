@@ -35,10 +35,10 @@
 "   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 " }}}
 
-" CompleteEndTag() {{{
-" Function to complete an sgml end tag name.
-" Ex. imap <buffer> <silent> / <c-r>=sgml#CompleteEndTag()<cr>
-function sgml#CompleteEndTag()
+function! sgml#CompleteEndTag() " {{{
+  " Function to complete an sgml end tag name.
+  " Ex. imap <buffer> <silent> / <c-r>=sgml#CompleteEndTag()<cr>
+
   let line = getline('.')
   if line[col('.') - 2] == '<' && line[col('.') - 1] !~ '\w'
     let tag = s:GetStartTag(line('.'))
@@ -79,8 +79,7 @@ function sgml#CompleteEndTag()
   return '/'
 endfunction " }}}
 
-" s:GetStartTag(line) {{{
-function s:GetStartTag(line)
+function! s:GetStartTag(line) " {{{
   let pairpos = searchpairpos('<\w', '', '</\w', 'bnW')
   if pairpos[0]
     " test if tag found is self closing
@@ -120,9 +119,9 @@ function s:GetStartTag(line)
   return ''
 endfunction " }}}
 
-" s:ExtractTags() {{{
-" Extracts a list of open tag names from the current line.
-function s:ExtractTags(line)
+function! s:ExtractTags(line) " {{{
+  " Extracts a list of open tag names from the current line.
+
   let line = a:line
   let tags = []
   while line =~ '<\w\+'
@@ -135,9 +134,9 @@ function s:ExtractTags(line)
   return tags
 endfunction " }}}
 
-" s:IgnoreTag(tag) {{{
-" Determines if a tag should be ignored.
-function s:IgnoreTag(tag)
+function! s:IgnoreTag(tag) " {{{
+  " Determines if a tag should be ignored.
+
   if exists('b:SgmlCompleteEndTagIgnore')
     for ignore in b:SgmlCompleteEndTagIgnore
       if a:tag == ignore
